@@ -4,6 +4,8 @@ import pandas as pd
 import obspy
 from torch.utils.data import Dataset, DataLoader
 from sklearn.model_selection import train_test_split
+from SeismicDataset import SeismicDataset
+from SeismicNet import SeismicNet
 
 # Paths
 data_dir = './training/data/S12_GradeA'
