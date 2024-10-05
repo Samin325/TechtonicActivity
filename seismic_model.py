@@ -23,7 +23,7 @@ test_loader = DataLoader(test_data, batch_size=32, shuffle=False)
 
 # Initialize the model, loss function, and optimizer
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model = SeismicNet().to(device)
+model = SeismicNet(input_size=600000).to(device)
 criterion = nn.MSELoss()  # Mean squared error for regression
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
