@@ -30,15 +30,3 @@ class SeismicDataset(Dataset):
             data = self.transform(data)
         
         return torch.tensor(data, dtype=torch.float32), torch.tensor(timestamp, dtype=torch.float32)
-
-# Paths
-data_dir = './training/data'
-catalog_file = './training/catalogs/apollo12_catalog_GradeA_final.csv'
-
-# Instantiate the dataset
-dataset = SeismicDataset(data_dir, catalog_file)
-
-# Train-test split
-train_data, test_data = train_test_split(dataset, test_size=0.2, random_state=42)
-train_loader = DataLoader(train_data, batch_size=5, shuffle=True)
-test_loader = DataLoader(test_data, batch_size=5, shuffle=False)
