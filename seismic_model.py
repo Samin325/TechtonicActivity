@@ -12,6 +12,7 @@ import torch.nn.functional as F
 # Paths
 data_dir = './space_apps_2024_seismic_detection/data/lunar/training/data/S12_GradeA'
 catalog_file = './space_apps_2024_seismic_detection/data/lunar/training/catalogs/apollo12_catalog_GradeA_final.csv'
+model_path = './seismic_model.pth'
 
 # Instantiate the dataset
 dataset = SeismicDataset(data_dir, catalog_file)
@@ -52,7 +53,10 @@ def train(model, train_loader, criterion, optimizer, device, epochs=10):
             running_loss += loss.item()
         
         print(f'Epoch [{epoch+1}/{epochs}], Loss: {running_loss/len(train_loader):.4f}')
-
+        
+    # Save the model after training
+    torch.save(model.state_dict(), model_save_path)
+    print(f"Model saved to {model_save_path}")
 
 def test(model, test_loader, device):
     model.eval()
@@ -71,8 +75,13 @@ def test(model, test_loader, device):
         
         print(f'Test Loss: {total_loss/len(test_loader):.4f}')
 
-# Train the model
-train(model, train_loader, criterion, optimizer, device, epochs=20)
+# Train the model if not already saved, otherwise load it
+if os.path.exists(model_save_path):
+    model.load_state_dict(torch.load(model_save_path))
+    print(f"Model loaded from {model_save_path}")
+else:
+    # Train the model
+    train(model, train_loader, criterion, optimizer, device, epochs=20)
 
 # Test the model
 test(model, test_loader, device)
