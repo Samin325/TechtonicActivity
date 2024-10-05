@@ -40,6 +40,9 @@ def train(model, train_loader, criterion, optimizer, device, epochs=10):
             
             # Forward pass
             outputs = model(inputs)
+            outputs = outputs.squeeze() # ensuring outputs are 1D
+            labels = labels.squeeze()
+            labels = labels.float() # ensure labels are float type
             loss = criterion(outputs.squeeze(), labels)
             
             # Backward pass and optimization
@@ -60,6 +63,9 @@ def test(model, test_loader, device):
             
             # Forward pass
             outputs = model(inputs)
+            outputs = outputs.squeeze() # ensuring outputs are 1D
+            labels = labels.squeeze()
+            labels = labels.float() # ensure labels are float type
             loss = criterion(outputs.squeeze(), labels)
             total_loss += loss.item()
         
