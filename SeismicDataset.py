@@ -1,9 +1,13 @@
 import os
 import torch
 import pandas as pd
+import numpy as np
 import obspy
 from torch.utils.data import Dataset, DataLoader
 from sklearn.model_selection import train_test_split
+
+# Define a fixed sequence length 
+SEQUENCE_LENGTH = 600000
 
 # Custom dataset for loading seismic data
 class SeismicDataset(Dataset):
@@ -26,6 +30,13 @@ class SeismicDataset(Dataset):
         file_path = file_path + '.mseed'
         st = obspy.read(file_path)
         data = st[0].data  # Assumes one trace per file
+
+        # Ensuring the data has a fixed length (pad with zeros if needed)
+        if len(data) > SEQUENCE_LENGTH:
+            data = data[:SEQUENCE_LENGTH]
+        else:
+            padding = SEQUENCE_LENGTH - len(data)
+            data = np.pad(data, (0, padding), 'constant')
         
         if self.transform:
             data = self.transform(data)
