@@ -18,8 +18,8 @@ dataset = SeismicDataset(data_dir, catalog_file)
 
 # Train-test split
 train_data, test_data = train_test_split(dataset, test_size=0.2, random_state=42)
-train_loader = DataLoader(train_data, batch_size=32, shuffle=True)
-test_loader = DataLoader(test_data, batch_size=32, shuffle=False)
+train_loader = DataLoader(train_data, batch_size=5, shuffle=True)
+test_loader = DataLoader(test_data, batch_size=5, shuffle=False)
 
 # Initialize the model, loss function, and optimizer
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
