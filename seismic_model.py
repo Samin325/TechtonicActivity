@@ -55,8 +55,8 @@ def train(model, train_loader, criterion, optimizer, device, epochs=10):
         print(f'Epoch [{epoch+1}/{epochs}], Loss: {running_loss/len(train_loader):.4f}')
         
     # Save the model after training
-    torch.save(model.state_dict(), model_save_path)
-    print(f"Model saved to {model_save_path}")
+    torch.save(model.state_dict(), model_path)
+    print(f"Model saved to {model_path}")
 
 def test(model, test_loader, device):
     model.eval()
@@ -76,9 +76,9 @@ def test(model, test_loader, device):
         print(f'Test Loss: {total_loss/len(test_loader):.4f}')
 
 # Train the model if not already saved, otherwise load it
-if os.path.exists(model_save_path):
-    model.load_state_dict(torch.load(model_save_path))
-    print(f"Model loaded from {model_save_path}")
+if os.path.exists(model_path):
+    model.load_state_dict(torch.load(model_path))
+    print(f"Model loaded from {model_path}")
 else:
     # Train the model
     train(model, train_loader, criterion, optimizer, device, epochs=20)
