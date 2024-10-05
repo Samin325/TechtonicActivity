@@ -6,6 +6,8 @@ from torch.utils.data import Dataset, DataLoader
 from sklearn.model_selection import train_test_split
 from SeismicDataset import SeismicDataset
 from SeismicNet import SeismicNet
+import torch.nn as nn
+import torch.nn.functional as F
 
 # Paths
 data_dir = './space_apps_2024_seismic_detection/data/lunar/training/data/S12_GradeA'
