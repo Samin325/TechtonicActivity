@@ -8,8 +8,8 @@ from SeismicDataset import SeismicDataset
 from SeismicNet import SeismicNet
 
 # Paths
-data_dir = './training/data/S12_GradeA'
-catalog_file = './training/catalogs/apollo12_catalog_GradeA_final.csv'
+data_dir = './space_apps_2024_seismic_detection/data/lunar/training/data/S12_GradeA'
+catalog_file = './space_apps_2024_seismic_detection/data/lunar/training/catalogs/apollo12_catalog_GradeA_final.csv'
 
 # Instantiate the dataset
 dataset = SeismicDataset(data_dir, catalog_file)
