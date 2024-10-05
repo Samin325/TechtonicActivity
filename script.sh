@@ -5,7 +5,7 @@ source env_test/bin/activate
 pip3 install torch torchvision torchaudio
 pip install obspy pandas scikit-learn
 pip install gdown
-gdown https://drive.google.com/file/d/19lfv8udhWZcBmoHpISQfvlD1FOVBp5mg/view?usp=drive_link
+gdown https://drive.google.com/uc?id=19lfv8udhWZcBmoHpISQfvlD1FOVBp5mg
 unzip space_apps_2024_seismic_detection.zip 
 rm -rf space_apps_2024_seismic_detection.zip 
 cd /usr/local/cuda-12.1/lib64
