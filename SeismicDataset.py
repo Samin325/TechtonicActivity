@@ -23,6 +23,7 @@ class SeismicDataset(Dataset):
         
         # Load the miniseed file using obspy
         file_path = os.path.join(self.data_dir, file_name)
+        file_path = file_path + '.mseed'
         st = obspy.read(file_path)
         data = st[0].data  # Assumes one trace per file
         
