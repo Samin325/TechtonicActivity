@@ -24,7 +24,6 @@ def query_earthquake_catalog(start_time, end_time, min_magnitude=5.0, limit=100)
                 "longitude": event["geometry"]["coordinates"][0],
                 "depth": event["geometry"]["coordinates"][2],
                 "magnitude": properties["mag"],
-                "place": properties["place"]
             })
         return events
     else:
@@ -32,10 +31,10 @@ def query_earthquake_catalog(start_time, end_time, min_magnitude=5.0, limit=100)
         return []
 
 # Function to store earthquake catalog data as a CSV
-def store_catalog_as_csv(earthquakes, file_name='earthquake_catalog.csv'):
+def store_raw_catalog_as_csv(earthquakes, directory_path, file_name='raw_earthquake_catalog.csv'):
     # Define the CSV columns
-    columns = ["time", "latitude", "longitude", "depth", "magnitude", "place"]
-    directory_path = "./data/earth/"
+    columns = ["time", "latitude", "longitude", "depth", "magnitude"]
+    
     # Write to the CSV file
     with open(f"{directory_path}{file_name}", mode='w', newline='') as file:
         writer = csv.DictWriter(file, fieldnames=columns)
@@ -44,11 +43,14 @@ def store_catalog_as_csv(earthquakes, file_name='earthquake_catalog.csv'):
         writer.writeheader()
         
         # Write the earthquake data
-        for eq in earthquakes:
-            writer.writerow(eq)
+        writer.writerows(earthquakes)
     
-    print(f"Catalog data saved to {file_name}")
+    print(f"Catalog data saved to {directory_path}{file_name}")
+    
 
-# Example usage: Query and save earthquake data from 2022
-earthquakes = query_earthquake_catalog("2022-01-01", "2022-12-31", min_magnitude=6, limit=100)
-store_catalog_as_csv(earthquakes)
+if __name__ == "__main__":
+    earthquakes = query_earthquake_catalog("2022-01-01", "2022-12-31", min_magnitude=5, limit=100)
+
+    file_name = "raw_earth_catalog"
+    directory_path = "./data/earth/"
+    store_raw_catalog_as_csv(earthquakes, directory_path, file_name)
