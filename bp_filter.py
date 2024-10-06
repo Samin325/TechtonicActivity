@@ -16,6 +16,18 @@ def get_time_velocity(filename: str) -> tuple[np.ndarray, np.ndarray]:
     return table['time_rel(sec)'].values, table['velocity(m/s)'].values
 
 
+def filter_lp(v_original: np.ndarray, fs, fc, ntaps=513) -> np.ndarray:
+    wc = fc / (fs / 2)
+    lp_coeff = signal.firwin(ntaps, wc, pass_zero="lowpass", window="hamming")
+    return signal.lfilter(lp_coeff, 1, v_original)
+
+
+def filter_hp(v_original: np.ndarray, fs, fc, ntaps=513) -> np.ndarray:
+    wc = fc / (fs / 2)
+    hp_coeff = signal.firwin(ntaps, wc, pass_zero="highpass", window="hamming")
+    return signal.lfilter(hp_coeff, 1, v_original)
+
+
 def filter_bp(v_original: np.ndarray, fs, fl, fh, ntaps=513) -> np.ndarray:
     wl = fl / (fs / 2)
     wh = fh / (fs / 2)
@@ -55,7 +67,6 @@ if __name__ == "__main__":
 
     v_filt = filter_bp(v, Fs, fl, fh)
     v_noise = filter_bs(v, Fs, fl, fh)
-    # TODO export v_filt and v_noise
 
     plot_spectrogram(v_filt, 200, 1000, Fs)
     plot_spectrogram(v_noise, 200, 1000, Fs)
