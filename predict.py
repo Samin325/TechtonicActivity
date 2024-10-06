@@ -11,7 +11,7 @@ from SeismicNet import SeismicNet
 # Path to the model checkpoint
 model_path = './seismic_model.pth'
 
-# Path to the unlabelled data directory
+# Path to the unlabelled data directory - change to predit for Lunar/Mars datasets
 unlabelled_dir = './space_apps_2024_seismic_detection/data/lunar/test/'
 
 # Load the trained model
@@ -41,7 +41,7 @@ def predict_start_time(file_path):
     return predicted_time
 
 # Create a CSV file to store predictions
-output_csv = './predictions.csv'
+output_csv = './catalogue_relativeTime.csv'
 results = []
 
 # Walk through the unlabelled directory and process each mseed file
@@ -53,7 +53,7 @@ for root, _, files in os.walk(unlabelled_dir):
             results.append([file, predicted_time])
 
 # Save the results to a CSV file
-df = pd.DataFrame(results, columns=['mseed_file', 'predicted_time'])
+df = pd.DataFrame(results, columns=['mseed_file', 'relative_time'])
 df.to_csv(output_csv, index=False)
 
 print(f"Predictions saved to {output_csv}")
