@@ -36,7 +36,7 @@ def get_seismic_data(network, station, location, channel, starttime, endtime, fi
         print(f"Failed to retrieve data for {file_name}: {response.status_code}")
 
 # Function to process earthquake CSV and download 24-hour MiniSEED data
-def process_earthquake_csv(csv_file, directory_path, data_catalog_file):
+def process_earthquake_csv(csv_file, directory_path, data_catalog_file, iris_param):
     # Clear the directory before starting
     clear_directory(directory_path)
     
@@ -44,7 +44,7 @@ def process_earthquake_csv(csv_file, directory_path, data_catalog_file):
     df = pd.read_csv(csv_file)
     
     # Open the new catalog file for writing
-    with open(data_catalog__file, mode='w', newline='') as catalog:
+    with open(data_catalog_file, mode='w', newline='') as catalog:
         catalog_writer = csv.writer(catalog)
         # Write the header
         catalog_writer.writerow(['filename', 'time_abs(%Y-%m-%dT%H:%M:%S.%f)', 'time_rel(sec)', 'id'])
@@ -63,10 +63,10 @@ def process_earthquake_csv(csv_file, directory_path, data_catalog_file):
             file_name = f"quake_{row['latitude']}_{row['longitude']}_{event_time.strftime('%Y%m%dT%H%M%S')}"
 
             # Specify seismic station and network info (you can change these based on your needs)
-            network = "IU"   # Example network (Global Seismic Network)
-            station = "ANMO"  # Example station
-            location = "00"   # Location code
-            channel = "BHZ"   # Channel code
+            network = iris_param["network"]   # Example network (Global Seismic Network)
+            station = iris_param["station"]  # Example station
+            location = iris_param["location"]   # Location code
+            channel = iris_param["channel"]   # Channel code
 
             # Get 24-hour MiniSEED data
             get_seismic_data(network, station, location, channel, start_time.isoformat(), end_time.isoformat(), file_name, directory_path)
@@ -83,8 +83,10 @@ def process_earthquake_csv(csv_file, directory_path, data_catalog_file):
             # Write the event information to the new catalog
             catalog_writer.writerow([file_name, time_abs, time_rel, event_id])
             
-    print(f"New catalog created: {data_catalog__file}")
-# Example usage: process the earthquake catalog CSV and download 24-hour MiniSEED files
-data_directory = './data/earth/mseed/'
-data_catalog__file = './data/earth/new_earth_earthquake_catalog.csv'
-process_earthquake_csv('./data/earth/earthquake_catalog.csv', data_directory, data_catalog__file)
+    print(f"New catalog created: {data_catalog_file}")
+
+if __name__ == "__main__":
+    # Example usage: process the earthquake catalog CSV and download 24-hour MiniSEED files
+    data_directory = './data/earth/training/data/mseed/'
+    data_catalog_file = './data/earth/earthquake_catalog.csv'
+    process_earthquake_csv('./data/earth/raw_earthquake_catalog.csv', data_directory, data_catalog_file)
