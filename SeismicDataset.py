@@ -28,10 +28,12 @@ class SeismicDataset(Dataset):
         # Load the miniseed file using obspy
         file_path = os.path.join(self.data_dir, file_name)
         
-        # IMPORTANT: IF USING THE MARS DATASET, UNCOMMENT THE FOLLOWING 1 LINE OF CODE
+        # IMPORTANT: IF USING THE MARS DATASET, UNCOMMENT THE FOLLOWING 1 LINE OF CODE:
         # file_path = file_path[:-4]
-        
+
+        # IMPORTANT: IF USING THE MARS OR THE LUNAR DATASET, UNCOMMENT THE FOLLOWING 1 LINE OF CODE:
         file_path = file_path + '.mseed'
+        
         st = obspy.read(file_path)
         data = st[0].data  # Assumes one trace per file
 
