@@ -29,10 +29,10 @@ class SeismicDataset(Dataset):
         mseed_file = file_info['filename']
         
         # IMPORTANT: IF USING THE MARS DATASET, UNCOMMENT THE FOLLOWING 1 LINE OF CODE:
-        # file_path = file_path[:-4]
+        # mseed_file = mseed_file[:-4]
 
         # IMPORTANT: IF USING THE MARS OR THE LUNAR DATASET, UNCOMMENT THE FOLLOWING 1 LINE OF CODE:
-        file_path = file_path + '.mseed'
+        mseed_file = mseed_file + '.mseed'
         
         time_rel = file_info['time_rel(sec)']
 
