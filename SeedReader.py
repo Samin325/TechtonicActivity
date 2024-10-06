@@ -3,7 +3,7 @@ import os
 from obspy import read
 from datetime import datetime
 
-def read_mseed(file_name, event_data):
+def read_mseed(file_name, event_data = None):
     """
     Read a MiniSEED file and extract the trace data and event information.
     
@@ -20,21 +20,24 @@ def read_mseed(file_name, event_data):
     tr_times = tr.times()
     tr_data = tr.data
 
-    # Start time of trace
-    starttime = tr.stats.starttime.datetime
+    if event_data:
+        # Start time of trace
+        starttime = tr.stats.starttime.datetime        
+        
+        # Get the earthquake event time from the CSV for the current file
+        file_base_name = os.path.basename(file_name)
+        event_info = event_data[event_data['filename'] == file_base_name]
 
-    # Get the earthquake event time from the CSV for the current file
-    file_base_name = os.path.basename(file_name)
-    event_info = event_data[event_data['filename'] == file_base_name]
-    
-    if event_info.empty:
-        raise ValueError(f"No event info found for file {file_base_name}")
+        if event_info.empty:
+            raise ValueError(f"No event info found for file {file_base_name}")
 
-    # Extract absolute event time
-    time_abs_str = event_info['time_abs(%Y-%m-%dT%H:%M:%S.%f)'].values[0]
-    time_abs = datetime.strptime(time_abs_str, '%Y-%m-%dT%H:%M:%S.%f')
+        # Extract absolute event time
+        time_abs_str = event_info['time_abs(%Y-%m-%dT%H:%M:%S.%f)'].values[0]
+        time_abs = datetime.strptime(time_abs_str, '%Y-%m-%dT%H:%M:%S.%f')
 
-    # Calculate the relative time of the earthquake event with respect to the start of the trace
-    arrival_time = (time_abs - starttime).total_seconds()
+        # Calculate the relative time of the earthquake event with respect to the start of the trace
+        arrival_time = (time_abs - starttime).total_seconds()
 
-    return tr_times, tr_data, arrival_time
+        return tr_times, tr_data, arrival_time
+    else:
+        return tr_times, tr_data
