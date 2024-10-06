@@ -1,4 +1,4 @@
-mseed_file,predicted_time
+mseed_file,relative_time
 xa.s15.00.mhz.1975-05-20HR00_evid00653.mseed,43724.625
 xa.s15.00.mhz.1974-06-16HR00_evid00536.mseed,43724.625
 xa.s15.00.mhz.1974-02-06HR00_evid00497.mseed,43724.625
