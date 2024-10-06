@@ -55,9 +55,9 @@ def process_earthquake_csv(csv_file, directory_path, data_catalog_file, iris_par
             event_time = datetime.utcfromtimestamp(row['time'] / 1000)
 
             # Make it a random time between 1 and 24 hours                 
-            r_hour = random.randint(1, 24)
-            start_time = event_time - timedelta(hours=r_hour)  # Random start time before event
-            end_time = event_time + timedelta(hours=24 - r_hour)  # End time after event
+            r_hour = random.randint(2, 21)
+            start_time = event_time - timedelta(hours = r_hour)  # Random start time before event
+            end_time = event_time + timedelta(hours = 24 - r_hour)  # End time after event
 
             # Define file name based on event time and location
             file_name = f"quake_{row['latitude']}_{row['longitude']}_{event_time.strftime('%Y%m%dT%H%M%S')}"
