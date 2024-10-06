@@ -45,13 +45,26 @@ if __name__ == '__main__':
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # Hyperparameters
-    batch_size = 32
-    learning_rate = 0.001
-    num_epochs = 10
+    batch_size = 5
+    learning_rate = 0.0001
+    num_epochs = 50
+
+    # Paths
+    # Change Paths to generate train/test on either lunar, mars, or earth data
+    # Mars:
+    # ./space_apps_2024_seismic_detection/data/mars/training/data/
+    # ./space_apps_2024_seismic_detection/data/mars/training/catalogs/Mars_InSight_training_catalog_final.csv
+    # Earth:
+    # ./earth/training/data/mseed/
+    # ./earth/earthquake_catalog.csv
+    # Moon:
+    # ./space_apps_2024_seismic_detection/data/lunar/training/data/S12_GradeA
+    # ./space_apps_2024_seismic_detection/data/lunar/training/catalogs/apollo12_catalog_GradeA_final.csv
 
     # Data paths
-    csv_file = './training/catalogs/seismic_catalog.csv'
-    data_dir = './training/data/'
+    data_dir = './space_apps_2024_seismic_detection/data/lunar/training/data/S12_GradeA'
+    csv_file = './space_apps_2024_seismic_detection/data/lunar/training/catalogs/apollo12_catalog_GradeA_final.csv'
+    
 
     # Get data loaders
     train_loader, test_loader = get_dataloaders(csv_file, data_dir, batch_size)
@@ -69,4 +82,4 @@ if __name__ == '__main__':
         print(f'Epoch [{epoch+1}/{num_epochs}], Train Loss: {train_loss:.4f}, Test Loss: {test_loss:.4f}')
 
     # Save the trained model
-    torch.save(model.state_dict(), 'seismic_model.pth')
+    torch.save(model.state_dict(), 'a_seismic_model.pth')

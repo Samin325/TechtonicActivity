@@ -27,6 +27,13 @@ class SeismicDataset(Dataset):
         # Get the filename and time_rel from the catalog
         file_info = self.catalog.iloc[idx]
         mseed_file = file_info['filename']
+        
+        # IMPORTANT: IF USING THE MARS DATASET, UNCOMMENT THE FOLLOWING 1 LINE OF CODE:
+        # file_path = file_path[:-4]
+
+        # IMPORTANT: IF USING THE MARS OR THE LUNAR DATASET, UNCOMMENT THE FOLLOWING 1 LINE OF CODE:
+        file_path = file_path + '.mseed'
+        
         time_rel = file_info['time_rel(sec)']
 
         # Read the mseed file
