@@ -11,10 +11,14 @@ import torch.nn.functional as F
 
 # Paths
 # Change Paths to generate train/test on either lunar or mars data
+# ./space_apps_2024_seismic_detection/data/mars/training/data/     - mars
+# ./space_apps_2024_seismic_detection/data/mars/training/catalogs/Mars_InSight_training_catalog_final.csv
 data_dir = './space_apps_2024_seismic_detection/data/lunar/training/data/S12_GradeA'
 catalog_file = './space_apps_2024_seismic_detection/data/lunar/training/catalogs/apollo12_catalog_GradeA_final.csv'
 model_path = './seismic_model.pth'
 
+# IMPORTANT NOTE: for the Mars data set, the catalogue has .csv file extensions in it, so one must
+# either remove the file extensions from the csv file or modify SeismicDataset.py to remove it there
 # Instantiate the dataset
 dataset = SeismicDataset(data_dir, catalog_file)
 
