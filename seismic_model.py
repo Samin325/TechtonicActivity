@@ -10,6 +10,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 # Paths
+# Change Paths to generate train/test on either lunar or mars data
 data_dir = './space_apps_2024_seismic_detection/data/lunar/training/data/S12_GradeA'
 catalog_file = './space_apps_2024_seismic_detection/data/lunar/training/catalogs/apollo12_catalog_GradeA_final.csv'
 model_path = './seismic_model.pth'
