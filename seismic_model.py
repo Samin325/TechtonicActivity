@@ -15,7 +15,7 @@ import torch.nn.functional as F
 # ./space_apps_2024_seismic_detection/data/mars/training/data/
 # ./space_apps_2024_seismic_detection/data/mars/training/catalogs/Mars_InSight_training_catalog_final.csv
 # Earth:
-# ./earth/training/data/mseed/earthquake_catalog.csv
+# ./earth/training/data/mseed/
 # ./earth/earthquake_catalog.csv
 # Moon:
 # ./space_apps_2024_seismic_detection/data/lunar/training/data/S12_GradeA
