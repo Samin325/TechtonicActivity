@@ -20,7 +20,7 @@ def read_mseed(file_name, event_data = None):
     tr_times = tr.times()
     tr_data = tr.data
 
-    if event_data:
+    if not event_data.empty:
         # Start time of trace
         starttime = tr.stats.starttime.datetime        
         
