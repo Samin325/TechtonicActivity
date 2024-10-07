@@ -16,4 +16,8 @@ Please use the catalogs from the psd-weighted-median-filter directory for scorin
 Complementary band-pass and band-stop filters are used to separate the quake-prone and noise components of the signals.
 These filtered signal components were passed to the other algorithms to reduce the impact of unreliable raw input.
 
+We supplemented the provided dataset by NASA with earthquake data for training our machine learning models. 
+We used USGS API to get a catalog of earthquakes that occured. 
+We used that data to query earthquake data from SAGE to get miniSEED files.
+
 Models were trained on GCP instances. To set up the environment, run script.sh in the directory that the model will be running in.
