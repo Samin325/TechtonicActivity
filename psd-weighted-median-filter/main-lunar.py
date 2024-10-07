@@ -39,7 +39,6 @@ def resolveTimes(stream):
 
   '''
   plt.figure(figsize=(10, 6))
-
   # plot duration above threshold
   plt.subplot(2, 1, 1)
   plt.plot(frequencies, duration_above_threshold, label='Duration Above Threshold (s)')
@@ -59,7 +58,7 @@ def resolveTimes(stream):
   plt.legend()
 
   plt.tight_layout()
-  #plt.show()
+  plt.show()
   '''
   # filter out frequencies not within the cutoff range
   valid_freq_indices = (frequencies >= low_cutoff) & (frequencies <= high_cutoff)
@@ -112,8 +111,8 @@ def resolveTimes(stream):
   return zip(start_times, end_times)
 
 
-dataDir = "data/lunar/test/data/S16_GradeB"
-resultFile = open("apollo12_catalog_S16_GradeB.csv", "a")
+dataDir = "../data/mars/test/data"
+resultFile = open("Mars_InSight_catalog.csv", "a")
 
 for filename in os.listdir(dataDir):
   print(filename)
