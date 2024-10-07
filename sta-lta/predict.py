@@ -9,18 +9,28 @@ from sta_lta_seismic_analysis import find_f1
 from helpers import implement_STA_LTA
 import scipy.signal as signal
 import numpy as np
-from filter.filters import filter_bp
+
 
 def categorize(trace):
     noise = calculate_noise_level(trace.data)
     index = bisect.bisect(lunar_training_buckets_max, noise)
     return index
 
+
+def filter_bp(v_original: np.ndarray, fs, fl, fh, ntaps=513) -> np.ndarray:
+    wl = fl / (fs / 2)
+    wh = fh / (fs / 2)
+    bp_coeff = signal.firwin(
+        ntaps, [wl, wh], pass_zero="bandpass", window="hamming")
+    return signal.lfilter(bp_coeff, 1, v_original)
+
+
 if __name__ == '__main__':
     fl = 0.3
     fh = 1.1
     test_lunar_folder = './space_apps_2024_seismic_detection/data/lunar/test/data/'
-    test_lunar_csvs = glob.glob(os.path.join(test_lunar_folder, '**', '*.mseed'))
+    test_lunar_csvs = glob.glob(os.path.join(
+        test_lunar_folder, '**', '*.mseed'))
     cwd = os.getcwd()
     with open(cwd+'/sta-lta/best_params_for_bucket_lunar.pkl', 'rb') as f:
         best_params_for_bucket = pickle.load(f)
